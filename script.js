@@ -8,6 +8,14 @@ document.addEventListener("DOMContentLoaded", function () {
             const targetId = this.getAttribute('href');
             const targetElement = document.querySelector(targetId);
             targetElement.scrollIntoView({ behavior: 'smooth' });
+
+            // Close the menu on mobile after clicking a link
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            if (window.innerWidth <= 768) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
         });
     });
 
@@ -20,6 +28,27 @@ document.addEventListener("DOMContentLoaded", function () {
             navbar.classList.remove('scrolled');
         }
     });
+
+    // Hamburger Menu Toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('active');
+    });
+
+    // Dynamically set the navbar height for mobile
+    function setNavbarHeight() {
+        const navbarHeight = navbar.offsetHeight;
+        document.documentElement.style.setProperty('--navbar-height', `${navbarHeight}px`);
+    }
+
+    // Set navbar height on load
+    setNavbarHeight();
+
+    // Update navbar height on window resize (in case the navbar height changes)
+    window.addEventListener('resize', setNavbarHeight);
 
     // Form Submission with Validation and Loading State
     const form = document.getElementById('contact-form');
